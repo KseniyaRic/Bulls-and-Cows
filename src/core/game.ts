@@ -7,3 +7,13 @@ export function createDigitValidator(base: number): DigitValidator {
     return !Number.isNaN(digit) && digit >= 0 && digit < base;
   };
 }
+
+export function isValidGuess(guess: string, length: number, base: number): boolean {
+  if (guess.length !== length) return false;
+  const isValidDigit = createDigitValidator(base);
+  const chars = guess.toLowerCase().split('');
+  const allValid = chars.every((char) => isValidDigit(char));
+  if (!allValid) return false;
+  const uniqueChars = new Set(chars);
+  return chars.length === uniqueChars.size;
+}
