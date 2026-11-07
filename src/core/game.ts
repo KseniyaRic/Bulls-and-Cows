@@ -1,4 +1,4 @@
-import type { DigitValidator } from '../core/types.js';
+import type { DigitValidator, RandomFn } from '../core/types.js';
 
 export function createDigitValidator(base: number): DigitValidator {
   return (char) => {
@@ -16,4 +16,24 @@ export function isValidGuess(guess: string, length: number, base: number): boole
   if (!allValid) return false;
   const uniqueChars = new Set(chars);
   return chars.length === uniqueChars.size;
+}
+
+export function generateSecret(length: number, base: number, random: RandomFn = Math.random): string {
+  const alphabet = '0123456789abcdef'.slice(0, base).split('');
+  const availableDigits = [...alphabet];
+  const secretChars: string[] = [];
+
+  for (let i = 0; i < length; i++) {
+    const r = random();
+
+    const randomIndex = Math.floor(r * availableDigits.length);
+
+    const pickedDigit = availableDigits[randomIndex];
+
+    secretChars.push(pickedDigit!);
+
+    availableDigits.splice(randomIndex, 1);
+  }
+
+  return secretChars.join('');
 }
