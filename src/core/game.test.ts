@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { createDigitValidator, isValidGuess, generateSecret } from './game.js';
+import { createDigitValidator, isValidGuess, generateSecret, evaluateGuess } from './game.js';
 
 describe('createDigitValidator', () => {
   test('base=10: принимает цифры, отвергает буквы', () => {
@@ -47,11 +47,32 @@ describe('generateSecret', () => {
   test('детерминированный результат при заданном random', () => {
     const mockValues = [0.3, 0.7, 0.2, 0.8];
     let i = 0;
-    const mockRandom = () => mockValues[i++];
+    const mockRandom = () => mockValues[i++]!;
 
     const secret1 = generateSecret(4, 10, mockRandom);
     i = 0;
     const secret2 = generateSecret(4, 10, mockRandom);
     expect(secret1).toBe(secret2);
+  });
+});
+
+describe('evaluateGuess', () => {
+  test('тестирует частичное совпадение', () => {
+    expect(evaluateGuess('0123', '0134')).toEqual({ bulls: 2, cows: 1 });
+  });
+  test('тестирует полное совпадение)', () => {
+    expect(evaluateGuess('1234', '1234')).toEqual({ bulls: 4, cows: 0 });
+  });
+
+  test('тестирует полную перестановку', () => {
+    expect(evaluateGuess('1234', '4321')).toEqual({ bulls: 0, cows: 4 });
+  });
+
+  test('тестирует отсутствие угаданной комбинации', () => {
+    expect(evaluateGuess('1234', '5678')).toEqual({ bulls: 0, cows: 0 });
+  });
+
+  test('нечувствительность к регистру (hex)', () => {
+    expect(evaluateGuess('a1b2', 'A1B2')).toEqual({ bulls: 4, cows: 0 });
   });
 });
