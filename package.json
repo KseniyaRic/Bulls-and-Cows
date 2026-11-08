@@ -7,6 +7,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "dev": "vite",
     "test": "vitest run",
     "test:watch": "vitest",
     "prepare": "husky",

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" fill="none">
+  <title>Cow</title>
+  <g transform="translate(120 110)">
+    <!-- horns -->
+    <path d="M -66 -36 C -86 -62 -64 -84 -40 -72 C -54 -64 -54 -48 -42 -40 Z" fill="#d8c7a8"/>
+    <path d="M 66 -36 C 86 -62 64 -84 40 -72 C 54 -64 54 -48 42 -40 Z" fill="#d8c7a8"/>
+    <!-- ears -->
+    <path d="M -66 -4 C -92 -10 -100 10 -78 20 C -74 6 -68 2 -62 2 Z" fill="#f7f7f5" stroke="#d7d9de" stroke-width="2"/>
+    <path d="M 66 -4 C 92 -10 100 10 78 20 C 74 6 68 2 62 2 Z" fill="#f7f7f5" stroke="#d7d9de" stroke-width="2"/>
+    <!-- head -->
+    <path d="M 0 -54 C 44 -54 66 -28 66 8 C 66 50 40 82 0 82 C -40 82 -66 50 -66 8 C -66 -28 -44 -54 0 -54 Z" fill="#f7f7f5" stroke="#d7d9de" stroke-width="2"/>
+    <!-- spots -->
+    <path d="M -46 -18 C -58 -8 -54 14 -36 10 C -24 6 -30 -22 -46 -18 Z" fill="#3a3f4b"/>
+    <path d="M 40 24 C 54 22 58 44 40 48 C 26 50 24 26 40 24 Z" fill="#3a3f4b"/>
+    <!-- muzzle -->
+    <path d="M -36 36 C -36 16 -18 8 0 8 C 18 8 36 16 36 36 C 36 60 18 72 0 72 C -18 72 -36 60 -36 36 Z" fill="#f4c6cf"/>
+    <!-- nostrils -->
+    <ellipse cx="-15" cy="42" rx="5.5" ry="7.5" fill="#b56a79"/>
+    <ellipse cx="15" cy="42" rx="5.5" ry="7.5" fill="#b56a79"/>
+    <!-- eyes -->
+    <circle cx="-28" cy="-4" r="7.5" fill="#1f2430"/>
+    <circle cx="28" cy="-4" r="7.5" fill="#1f2430"/>
+  </g>
+</svg>
