@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { createDigitValidator, isValidGuess, generateSecret, evaluateGuess } from './game.js';
+import { createDigitValidator, isValidGuess, generateSecret, evaluateGuess, countPossibleSecrets } from './game.js';
 
 describe('createDigitValidator', () => {
   test('base=10: принимает цифры, отвергает буквы', () => {
@@ -74,5 +74,23 @@ describe('evaluateGuess', () => {
 
   test('нечувствительность к регистру (hex)', () => {
     expect(evaluateGuess('a1b2', 'A1B2')).toEqual({ bulls: 4, cows: 0 });
+  });
+});
+
+describe('countPossibleSecrets', () => {
+  test('возвращает 1 для длины 0 (пустой секрет)', () => {
+    expect(countPossibleSecrets(0, 10)).toBe(1);
+  });
+
+  test('возвращает 0, если длина больше базы', () => {
+    expect(countPossibleSecrets(5, 2)).toBe(0);
+  });
+
+  test('считает перестановки для dec (base=10)', () => {
+    expect(countPossibleSecrets(4, 10)).toBe(5040);
+  });
+
+  test('считает перестановки для hex (base=16)', () => {
+    expect(countPossibleSecrets(2, 16)).toBe(240);
   });
 });
