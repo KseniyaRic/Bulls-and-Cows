@@ -1,5 +1,13 @@
 import { describe, test, expect } from 'vitest';
-import { createDigitValidator, isValidGuess, generateSecret, evaluateGuess, countPossibleSecrets } from './game.js';
+import {
+  createDigitValidator,
+  isValidGuess,
+  generateSecret,
+  evaluateGuess,
+  countPossibleSecrets,
+  createInitialState,
+  addGuessToState,
+} from './game.js';
 
 describe('createDigitValidator', () => {
   test('base=10: принимает цифры, отвергает буквы', () => {
@@ -92,5 +100,47 @@ describe('countPossibleSecrets', () => {
 
   test('считает перестановки для hex (base=16)', () => {
     expect(countPossibleSecrets(2, 16)).toBe(240);
+  });
+});
+
+describe('Обновление состояния (иммутабельность)', () => {
+  test('создает начальное состояние и время старта', () => {
+    const mockNow = 1000000;
+    const state = createInitialState('1234', 4, 10, mockNow);
+
+    expect(state.startTime).toBe(mockNow);
+    expect(state.endTime).toBeNull();
+    expect(state.status).toBe('playing');
+    expect(state.history).toEqual([]);
+  });
+
+  test('при угадывании меняет статус на "won" и фиксирует время окончания', () => {
+    const startTime = 1000000;
+    const initialState = createInitialState('1234', 4, 10, startTime);
+    const endTime = 1005000;
+    const newState = addGuessToState(initialState, '1234', 4, 0, endTime);
+
+    expect(newState.status).toBe('won');
+    expect(newState.endTime).toBe(endTime);
+    expect(newState.history.length).toBe(1);
+    expect(newState.history[0]).toEqual({ guess: '1234', bulls: 4, cows: 0 });
+  });
+  test('не меняет статус, если попытка неверная', () => {
+    const initialState = createInitialState('1234', 4, 10, 1000000);
+    const newState = addGuessToState(initialState, '5678', 0, 0, 1005000);
+
+    expect(newState.status).toBe('playing');
+    expect(newState.endTime).toBeNull();
+    expect(newState.history.length).toBe(1);
+  });
+
+  test('обновляет историю иммутабельно (не мутирует старую позицию)', () => {
+    const initialState = createInitialState('1234', 4, 10, 1000000);
+    const newState = addGuessToState(initialState, '5678', 0, 0, 1001000);
+
+    expect(initialState.history.length).toBe(0);
+    expect(initialState.status).toBe('playing');
+    expect(initialState).not.toBe(newState);
+    expect(initialState.history).not.toBe(newState.history);
   });
 });
