@@ -58,3 +58,22 @@ export function evaluateGuess(secret: string, guess: string): Evaluation {
 
   return { bulls, cows };
 }
+
+const secretsCache = new Map<string, number>();
+
+export function countPossibleSecrets(length: number, base: number): number {
+  if (length === 0) return 1;
+  if (length > base) return 0;
+  if (length < 0 || base < 0) return 0;
+
+  const cacheKey = `${length}-${base}`;
+  if (secretsCache.has(cacheKey)) {
+    return secretsCache.get(cacheKey)!;
+  }
+
+  const result = base * countPossibleSecrets(length - 1, base - 1);
+
+  secretsCache.set(cacheKey, result);
+
+  return result;
+}
