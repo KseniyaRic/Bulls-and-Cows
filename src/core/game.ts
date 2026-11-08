@@ -1,4 +1,4 @@
-import type { DigitValidator, RandomFn, Evaluation } from '../core/types.js';
+import type { DigitValidator, RandomFn, Evaluation, HistoryEntry, GameState } from '../core/types.js';
 
 export function createDigitValidator(base: number): DigitValidator {
   return (char) => {
@@ -76,4 +76,34 @@ export function countPossibleSecrets(length: number, base: number): number {
   secretsCache.set(cacheKey, result);
 
   return result;
+}
+
+export function createInitialState(secret: string, length: number, base: number, now: number = Date.now()): GameState {
+  return {
+    secret,
+    settings: { length, base },
+    history: [],
+    status: 'playing',
+    startTime: now,
+    endTime: null,
+  };
+}
+
+export function addGuessToState(
+  state: GameState,
+  guess: string,
+  bulls: number,
+  cows: number,
+  now: number = Date.now(),
+): GameState {
+  const newEntry: HistoryEntry = { guess, bulls, cows };
+
+  const isWon = bulls === state.settings.length;
+
+  return {
+    ...state,
+    history: [...state.history, newEntry],
+    status: isWon ? 'won' : 'playing',
+    endTime: isWon ? now : state.endTime,
+  };
 }
