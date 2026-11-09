@@ -1,5 +1,6 @@
 import { isValidGuess, evaluateGuess, createInitialState, addGuessToState } from '../core/game.js';
 import { saveRecord } from '../storage.js';
+import { showModal } from './modal.js';
 
 export function renderGameScreen(
   container: HTMLElement,
@@ -56,7 +57,14 @@ export function renderGameScreen(
     const guess = guessInput.value;
 
     if (!isValidGuess(guess, length, base)) {
-      alert(`Enter ${length} unique valid characters!`);
+      showModal({
+        title: 'Invalid Input',
+        message: `Please enter ${length} unique valid characters.`,
+        buttonText: 'OK',
+        onClose: () => {
+          guessInput.focus();
+        },
+      });
       return;
     }
 
@@ -74,7 +82,12 @@ export function renderGameScreen(
     guessInput.value = '';
 
     if (gameState.status === 'won') {
-      alert('You won!');
+      showModal({
+        title: '🎉 You Won!',
+        message: `You guessed the secret in ${gameState.history.length} steps`,
+        buttonText: 'Play Again',
+        onClose: onNewGame,
+      });
       guessBtn.disabled = true;
       guessInput.disabled = true;
 

@@ -76,6 +76,10 @@ input[type='text']:focus {
   border-color: #43302e;
 }
 
+h3 {
+  font-weight: 200;
+}
+
 button {
   font-family: 'Sniglet', sans-serif;
   font-size: 30px;
@@ -102,4 +106,89 @@ button:active {
 button:disabled {
   background-color: #bdc3c7;
   cursor: not-allowed;
+}
+.game {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.game_score {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.game_input-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.game_guess-btn {
+  font-size: 20px;
+  margin: 0;
+}
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.modal-overlay--visible {
+  opacity: 1;
+}
+
+.modal {
+  background-color: #fff1b5;
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9);
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.modal-overlay--visible .modal {
+  transform: scale(1);
+}
+
+.modal__title {
+  font-size: 20px;
+  font-weight: 200;
+  color: #43302e;
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.modal__message {
+  font-size: 1.1rem;
+  color: #6a1b2d;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.modal__button {
+  background-color: #6a1b2d;
+  color: #fff1b5;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: 200;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modal__button:hover {
+  background-color: #c1dbe8;
 }
