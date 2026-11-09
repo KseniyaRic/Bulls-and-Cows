@@ -61,7 +61,7 @@ export function renderSettingsScreen(container: HTMLElement, onStart: (base: num
   } else {
     const list = document.createElement('ul');
 
-    records.slice(0, 3).forEach((rec) => {
+    records.forEach((rec) => {
       const li = document.createElement('li');
       const timeSec = (rec.timeMs / 1000).toFixed(1);
       li.textContent = `Base ${rec.base}, Len ${rec.length}: ${rec.steps} steps, ${timeSec}s`;
@@ -89,7 +89,7 @@ export function renderSettingsScreen(container: HTMLElement, onStart: (base: num
       recordsDiv.append(emptyText);
     } else {
       const list = document.createElement('ul');
-      records.slice(0, 3).forEach((rec) => {
+      records.forEach((rec) => {
         const li = document.createElement('li');
         const timeSec = (rec.timeMs / 1000).toFixed(1);
         li.textContent = `Base ${rec.base}, Len ${rec.length}: ${rec.steps} steps, ${timeSec}s`;

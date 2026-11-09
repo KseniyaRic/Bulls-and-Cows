@@ -12,6 +12,7 @@ export function renderGameScreen(
   container.replaceChildren();
 
   let gameState = createInitialState(secret, length, base);
+  let timerIntervalId: number | null = null;
 
   const gameDiv = document.createElement('div');
   gameDiv.className = 'game';
@@ -27,7 +28,11 @@ export function renderGameScreen(
   resultSpan.className = 'game_result';
   resultSpan.textContent = 'Bulls: 0 | Cows: 0';
 
-  scorePanel.append(stepsSpan, resultSpan);
+  const timeSpentElement = document.createElement('span');
+  timeSpentElement.className = 'game_time';
+  timeSpentElement.textContent = 'Time: 00:00';
+
+  scorePanel.append(stepsSpan, resultSpan, timeSpentElement);
 
   const inputDiv = document.createElement('div');
   inputDiv.className = 'game_input-group';
@@ -52,6 +57,31 @@ export function renderGameScreen(
 
   gameDiv.append(scorePanel, inputDiv, historyList, newGameBtn);
   container.append(gameDiv);
+
+  const formatTime = (totalSeconds: number): string => {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  };
+
+  const startTimer = () => {
+    if (timerIntervalId !== null) clearInterval(timerIntervalId);
+
+    timerIntervalId = window.setInterval(() => {
+      const elapsedMs = Date.now() - gameState.startTime;
+      const elapsedSeconds = Math.floor(elapsedMs / 1000);
+      timeSpentElement.textContent = `Time: ${formatTime(elapsedSeconds)}`;
+    }, 1000);
+  };
+
+  const stopTimer = () => {
+    if (timerIntervalId !== null) {
+      clearInterval(timerIntervalId);
+      timerIntervalId = null;
+    }
+  };
+
+  startTimer();
 
   guessBtn.addEventListener('click', () => {
     const guess = guessInput.value;
@@ -82,9 +112,11 @@ export function renderGameScreen(
     guessInput.value = '';
 
     if (gameState.status === 'won') {
+      const finalTimeMs = (gameState.endTime ?? Date.now()) - gameState.startTime;
+      stopTimer();
       showModal({
         title: '🎉 You Won!',
-        message: `You guessed the secret in ${gameState.history.length} steps`,
+        message: `You guessed the secret in ${gameState.history.length} steps and in ${formatTime(Math.floor(finalTimeMs / 1000))}`,
         buttonText: 'Play Again',
         onClose: onNewGame,
       });
