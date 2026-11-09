@@ -25,3 +25,11 @@ export type GameState = {
   startTime: number;
   endTime: number | null;
 };
+
+export type RecordEntry = {
+  base: number;
+  length: number;
+  steps: number;
+  timeMs: number;
+  date: string;
+};

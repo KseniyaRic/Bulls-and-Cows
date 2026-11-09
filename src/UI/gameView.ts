@@ -1,4 +1,5 @@
 import { isValidGuess, evaluateGuess, createInitialState, addGuessToState } from '../core/game.js';
+import { saveRecord } from '../storage.js';
 
 export function renderGameScreen(
   container: HTMLElement,
@@ -76,6 +77,15 @@ export function renderGameScreen(
       alert('You won!');
       guessBtn.disabled = true;
       guessInput.disabled = true;
+
+      const timeMs = (gameState.endTime ?? Date.now()) - gameState.startTime;
+      saveRecord({
+        base,
+        length,
+        steps: gameState.history.length,
+        timeMs,
+        date: new Date().toISOString(),
+      });
     }
   });
 
