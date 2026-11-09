@@ -31,3 +31,64 @@ main.className = 'main';
 
 app.append(header, main);
 document.body.append(app);
+
+function clearMain(): void {
+  main.replaceChildren();
+}
+
+function createBaseSelect(): HTMLSelectElement {
+  const select = document.createElement('select');
+  select.className = 'settings_select';
+  const bases = [
+    { value: 2, label: 'Binary (2)' },
+    { value: 8, label: 'Octal (8)' },
+    { value: 10, label: 'Decimal (10)' },
+    { value: 16, label: 'Hex (16)' },
+  ];
+  bases.forEach((base) => {
+    const baseOption = document.createElement('option');
+    baseOption.value = String(base.value);
+    baseOption.textContent = base.label;
+    if (base.value === 10) baseOption.selected = true;
+    select.append(baseOption);
+  });
+  return select;
+}
+
+function createLengthSelect(): HTMLSelectElement {
+  const select = document.createElement('select');
+  select.className = 'settings_select';
+  for (let length = 2; length <= 6; length++) {
+    const lengthOption = document.createElement('option');
+    lengthOption.value = String(length);
+    lengthOption.textContent = `Length: ${length}`;
+    if (length === 4) lengthOption.selected = true;
+    select.append(lengthOption);
+  }
+  return select;
+}
+
+function renderSettingsScreen(): void {
+  clearMain();
+
+  const settingsDiv = document.createElement('div');
+  settingsDiv.className = 'settings';
+
+  const baseSelect = createBaseSelect();
+  const lengthSelect = createLengthSelect();
+
+  const secretInput = document.createElement('input');
+  secretInput.className = 'settings_input';
+  secretInput.type = 'text';
+  secretInput.placeholder = 'Enter secret number';
+
+  const startBtn = document.createElement('button');
+  startBtn.className = 'settings_start-btn';
+  startBtn.textContent = 'Start';
+
+  settingsDiv.append(baseSelect, lengthSelect, secretInput, startBtn);
+
+  main.append(settingsDiv);
+}
+
+renderSettingsScreen();
