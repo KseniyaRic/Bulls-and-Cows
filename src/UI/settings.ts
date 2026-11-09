@@ -1,4 +1,5 @@
 import { loadRecords } from '../storage.js';
+import { countPossibleSecrets } from '../core/game.js';
 
 export function renderSettingsScreen(container: HTMLElement, onStart: (base: number, length: number) => void): void {
   container.replaceChildren();
@@ -32,11 +33,14 @@ export function renderSettingsScreen(container: HTMLElement, onStart: (base: num
     lengthSelect.append(lengthOption);
   }
 
+  const difficultySpan = document.createElement('span');
+  difficultySpan.className = 'settings_difficulty';
+
   const startBtn = document.createElement('button');
   startBtn.className = 'settings_start-btn';
   startBtn.textContent = 'Start';
 
-  settingsDiv.append(baseSelect, lengthSelect, startBtn);
+  settingsDiv.append(baseSelect, lengthSelect, difficultySpan, startBtn);
   container.append(settingsDiv);
 
   const recordsDiv = document.createElement('div');
@@ -95,6 +99,13 @@ export function renderSettingsScreen(container: HTMLElement, onStart: (base: num
     }
   };
 
+  const updateDifficulty = () => {
+    const base = Number(baseSelect.value);
+    const length = Number(lengthSelect.value);
+    const count = countPossibleSecrets(length, base);
+    difficultySpan.textContent = `Possible combinations: ${count}`;
+  };
+
   const updateLengthOptions = () => {
     const currentBase = Number(baseSelect.value);
     Array.from(lengthSelect.options).forEach((option) => {
@@ -108,11 +119,13 @@ export function renderSettingsScreen(container: HTMLElement, onStart: (base: num
   baseSelect.addEventListener('change', () => {
     updateLengthOptions();
     updateRecords();
+    updateDifficulty();
   });
 
   lengthSelect.addEventListener('change', () => {
     updateLengthOptions();
     updateRecords();
+    updateDifficulty();
   });
 
   startBtn.addEventListener('click', () => {
@@ -123,4 +136,5 @@ export function renderSettingsScreen(container: HTMLElement, onStart: (base: num
 
   updateLengthOptions();
   updateRecords();
+  updateDifficulty();
 }
