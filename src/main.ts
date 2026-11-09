@@ -2,6 +2,7 @@ import '../style.css';
 import { renderSettingsScreen } from './UI/settings.js';
 import { renderGameScreen } from './UI/gameView.js';
 import { generateSecret } from './core/game.js';
+
 const app = document.createElement('div');
 app.id = 'app';
 
@@ -12,7 +13,7 @@ const titleContainer = document.createElement('div');
 titleContainer.className = 'header_title-container';
 
 const leftImg = document.createElement('img');
-leftImg.src = '/public/pic/bull.svg';
+leftImg.src = './pic/bull.svg';
 leftImg.alt = 'Bull';
 leftImg.className = 'header_icon';
 
@@ -21,7 +22,7 @@ title.textContent = 'Bulls and Cows';
 title.className = 'header_text';
 
 const rightImg = document.createElement('img');
-rightImg.src = '/public/pic/cow.svg';
+rightImg.src = './pic/cow.svg';
 rightImg.alt = 'Cow';
 rightImg.className = 'header_icon';
 
