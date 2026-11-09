@@ -1,6 +1,7 @@
 import '../style.css';
 import { renderSettingsScreen } from './UI/settings.js';
-
+import { renderGameScreen } from './UI/gameView.js';
+import { generateSecret } from './core/game.js';
 const app = document.createElement('div');
 app.id = 'app';
 
@@ -33,4 +34,15 @@ main.className = 'main';
 app.append(header, main);
 document.body.append(app);
 
-renderSettingsScreen(main, () => {});
+function showSettings(): void {
+  renderSettingsScreen(main, (base, length) => {
+    const secret = generateSecret(length, base);
+    showGame(base, length, secret);
+  });
+}
+
+function showGame(base: number, length: number, secret: string): void {
+  renderGameScreen(main, base, length, secret, showSettings);
+}
+
+showSettings();
