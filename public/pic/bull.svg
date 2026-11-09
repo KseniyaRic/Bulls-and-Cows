@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" fill="none">
+  <title>Bull</title>
+  <g transform="translate(120 110)">
+    <!-- horns -->
+    <path d="M -72 -28 C -96 -64 -70 -92 -42 -78 C -58 -70 -58 -50 -44 -40 Z" fill="#3a3f4b"/>
+    <path d="M 72 -28 C 96 -64 70 -92 42 -78 C 58 -70 58 -50 44 -40 Z" fill="#3a3f4b"/>
+    <!-- ears -->
+    <path d="M -70 -8 C -96 -14 -104 6 -82 16 C -78 2 -72 -2 -66 -2 Z" fill="#5a6170"/>
+    <path d="M 70 -8 C 96 -14 104 6 82 16 C 78 2 72 -2 66 -2 Z" fill="#5a6170"/>
+    <!-- head -->
+    <path d="M 0 -58 C 46 -58 70 -30 70 6 C 70 48 42 82 0 82 C -42 82 -70 48 -70 6 C -70 -30 -46 -58 0 -58 Z" fill="#5a6170"/>
+    <!-- muzzle -->
+    <path d="M -38 34 C -38 14 -20 6 0 6 C 20 6 38 14 38 34 C 38 58 20 70 0 70 C -20 70 -38 58 -38 34 Z" fill="#eceff4"/>
+    <!-- nostrils -->
+    <ellipse cx="-16" cy="40" rx="6" ry="8" fill="#5a6170"/>
+    <ellipse cx="16" cy="40" rx="6" ry="8" fill="#5a6170"/>
+    <!-- eyes -->
+    <circle cx="-30" cy="-6" r="8" fill="#1f2430"/>
+    <circle cx="30" cy="-6" r="8" fill="#1f2430"/>
+    <!-- ring -->
+    <path d="M -6 58 a 10 10 0 1 0 12 0" stroke="#c9a227" stroke-width="4" fill="none"/>
+  </g>
+</svg>
